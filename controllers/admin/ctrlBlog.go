@@ -17,25 +17,6 @@ func UploadBlogInfo(ctx *gin.Context) {
 		return
 	}
 	ctx.SaveUploadedFile(image, fmt.Sprintf("./static/image/%s", image.Filename))
-	// file, _ := image.Open()
-	// defer file.Close()
-	// var buf [4]byte
-	// var content []byte
-	// content = append(content, 137, 80, 78, 71)
-	// file.Read(buf[:])
-	// for {
-	// 	n, err := file.Read(buf[:])
-	// 	if err == io.EOF {
-	// 		break
-	// 	}
-	// 	if err != nil {
-	// 		fmt.Printf("err: %v\n", err)
-	// 		break
-	// 	}
-	// 	content = append(content, buf[:n]...)
-	// }
-	// webpct := SaveImage(image.Filename, content)
-	// SaveImage(file.Filename,file.content)
 	blog := models.Blog{
 		Title:    ctx.PostForm("title"),
 		Text:     ctx.PostForm("text"),
