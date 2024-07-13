@@ -46,3 +46,13 @@ func DomainInit() {
 	DOMAIN = cfg.Section("host").Key("domain").String()
 	CORS = cfg.Section("host").Key("cors").String()
 }
+
+var E_ADDR, E_USERNAME, E_PASSWORD, E_HOST string
+
+func EmailInit() {
+	cfg, _ := ini.Load("./config.ini")
+	E_ADDR = cfg.Section("email").Key("addr").String()
+	E_USERNAME = cfg.Section("email").Key("username").String()
+	E_PASSWORD = cfg.Section("email").Key("password").String()
+	E_HOST = cfg.Section("email").Key("host").String()
+}
