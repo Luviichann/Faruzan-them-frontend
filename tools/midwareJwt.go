@@ -11,34 +11,21 @@ import (
 )
 
 func AuthMiddleware(ctx *gin.Context) {
-	// fmt.Print("123123")
 	tokenString := ctx.GetHeader("Authorization")
-	// fmt.Printf("tokenString: %v\n", tokenString)
 	if tokenString == "" || !strings.HasPrefix(tokenString, "Bearer ") {
-		// ctx.JSON(http.StatusOK, gin.H{
-		// 	"code": 401,
-		// 	"msg":  "权限不足",
-		// })
 		Response(ctx, http.StatusOK, 401, gin.H{}, "权限不足")
 		ctx.Abort()
 		return
 	}
 	tokenString = tokenString[7:]
-	// fmt.Printf("tokenString: %T\n", tokenString)
 	token, claims, err := ParseToken(tokenString)
 	if err != nil || !token.Valid {
-		// fmt.Printf("err: %v\n", err)
-		// ctx.JSON(http.StatusOK, gin.H{
-		// 	"code": 401,
-		// 	"msg":  "解析失败",
-		// })
 		Response(ctx, http.StatusOK, 401, gin.H{
 			"error": err,
 		}, "token解析失败")
 		ctx.Abort()
 		return
 	}
-	// 验证通过后获取userId
 	key := claims.Key
 	if key != models.ACCOUNT {
 		Response(ctx, http.StatusOK, 401, gin.H{}, "用户不存在")

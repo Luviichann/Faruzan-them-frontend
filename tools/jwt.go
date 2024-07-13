@@ -20,9 +20,8 @@ func ReleaseToken(key string) (string, error) {
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(expirationTime),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
-			// 这个Issuer可能要放进配置文件中。
-			Issuer:  "faruzan.cn",
-			Subject: "token",
+			Issuer:    "faruzan.cn",
+			Subject:   "token",
 		},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
