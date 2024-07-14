@@ -1,7 +1,7 @@
 ## 在根目录添加config.ini
 
 ### 格式如下：
-
+```ini
 [mysql]  
 ip = 127.0.0.1  
 port = 3306  
@@ -25,4 +25,6 @@ addr = smtp.example.com:25
 username = username@example.com  
 password = ******  
 host = smtp.example.com  
+```
+
   
