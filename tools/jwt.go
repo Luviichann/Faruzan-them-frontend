@@ -1,6 +1,7 @@
 package tools
 
 import (
+	"frz/models"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -20,7 +21,7 @@ func ReleaseToken(key string) (string, error) {
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(expirationTime),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
-			Issuer:    "faruzan.cn",
+			Issuer:    models.DOMAIN,
 			Subject:   "token",
 		},
 	}
