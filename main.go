@@ -23,6 +23,7 @@ func main() {
 		}
 
 	}
+
 	r.Use(cors)
 
 	r.Static("/static/image", "./static/image")
