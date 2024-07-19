@@ -33,6 +33,7 @@ func init() {
 	}
 	AdminInit()
 	DomainInit()
+	EmailInit()
 }
 
 func AdminInit() {
