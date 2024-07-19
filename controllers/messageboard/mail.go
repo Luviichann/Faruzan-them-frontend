@@ -1,6 +1,7 @@
 package messageboard
 
 import (
+	"crypto/tls"
 	"errors"
 	"fmt"
 	"frz/models"
@@ -40,16 +41,21 @@ func SendEmail(ctx *gin.Context) {
 	//设置文件发送的内容
 	code := GenerateRandomString(10)
 	e.HTML = []byte(fmt.Sprintf(`
-	<p>你的验证码是%s，5分钟内有效。不要告诉别人哦。</p>
-        <style>
-            p{
-                color: skyblue;
-            }
-        </style>
+	<p>你的验证码是<span>%s</span>，3分钟内有效。不要告诉别人哦。</p>
+    <style>
+        p{
+            color: rgb(22, 101, 132);
+        }
+        span{
+            color: rgb(89, 186, 153);
+            font-weight: bolder;
+        }
+    </style>
 	`, code))
 	//设置服务器相关的配置
-	err := e.Send(models.E_ADDR, smtp.PlainAuth("", models.E_USERNAME, models.E_PASSWORD, models.E_HOST))
+	err := e.SendWithTLS(models.E_ADDR, smtp.PlainAuth("", models.E_USERNAME, models.E_PASSWORD, models.E_HOST), &tls.Config{ServerName: models.E_HOST})
 	if err != nil {
+		fmt.Printf("err: %v\n", err)
 		log.Fatal(err)
 		return
 	}
@@ -63,8 +69,8 @@ func SendEmail(ctx *gin.Context) {
 	}
 	models.DB.Create(&emailCode)
 	// 一段时间以后验证码自动失效。
-	// time.Sleep(time.Second * 20)
-	// models.DB.Where("email = ? AND code = ? AND type = ?", emailCode.Email, emailCode.Code, emailCode.Type).Delete(&emailCode)
+	time.Sleep(time.Second * 180)
+	models.DB.Where("email = ? AND code = ? AND type = ?", emailCode.Email, emailCode.Code, emailCode.Type).Delete(&emailCode)
 }
 
 // 生成验证码。
