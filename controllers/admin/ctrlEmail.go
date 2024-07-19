@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"crypto/tls"
 	"fmt"
 	"frz/models"
 	"frz/tools"
@@ -42,7 +43,7 @@ func sendEmail(content string, receive []string) {
 	//设置文件发送的内容
 	e.HTML = []byte(content)
 	//设置服务器相关的配置
-	err := e.Send(models.E_ADDR, smtp.PlainAuth("", models.E_USERNAME, models.E_PASSWORD, models.E_HOST))
+	err := e.SendWithTLS(models.E_ADDR, smtp.PlainAuth("", models.E_USERNAME, models.E_PASSWORD, models.E_HOST), &tls.Config{ServerName: models.E_HOST})
 	if err != nil {
 		log.Fatal(err)
 		return
