@@ -17,6 +17,11 @@ import (
 )
 
 func SendEmail(ctx *gin.Context) {
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Println(err)
+		}
+	}()
 	mailInfo := struct {
 		Email string `json:"email"`
 		Type  string `json:"type"`
