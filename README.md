@@ -21,7 +21,7 @@ cors = *
   
 ;邮箱配置  
 [email]  
-addr = smtp.example.com:25  
+addr = smtp.example.com:465  
 username = username@example.com  
 password = ******  
 host = smtp.example.com  
