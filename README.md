@@ -11,8 +11,8 @@ database = 数据库名
   
 ;管理页面账号  
 [super]  
-account = super  
-password = 098ml  
+account = account  
+password = password  
   
 ;后端域名和cors  
 [host]  
